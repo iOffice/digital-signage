@@ -5,6 +5,9 @@
     "es6": true
   },
   "globals": {
+    "m2SetRTVar": false,
+    "gMap": true,
+    "M2": true,
     "_": false,
     "angular": false,
     "L": false,
