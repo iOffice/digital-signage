@@ -1,7 +1,46 @@
 <html>
 <head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" type="text/css" href="dist/leaflet.css" />
+  <link rel="stylesheet" type="text/css" href="dist/floorviewer.css" />
+  <link rel="stylesheet" href="dist/leaflet.awesome-markers.css">
+  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <script src="dist/angular.min.js"></script>
+  <script src="dist/all.js"></script>
+  <script src="dist/leaflet.awesome-markers.js"></script>
+  <style>
+    .awesome-marker i {
+        font-size: 20px;
+        margin-top: 8px;
+    }
+    .legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+      padding: 10px;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid #CCC;
+    }
+    .legend i {
+      width: 18px;
+      height: 18px;
+      float: left;
+      margin-right: 8px;
+      opacity: 1;
+    }
+  </style>
 </head>
-<body>
-<h1>Page Setup</h1>
+<body ng-app="DemoApp" ng-controller="DemoController">
+  <div  style="width:100%; height:100%">
+    <fv-map zooming="true" select-room="true" floor-id="224"  style="width:100%; height:100%; background:white;" >
+      <div fv-room-polygon-layer inherit-style="reservations"></div>
+      <div fv-tile-layer></div>
+      <div fv-reservations-layer></div>
+      <div fv-room-name-layer font="arial" sizes="[12, 15]"></div>
+    </fv-map>
+    <div id="title" style="position:absolute; left:20px; top:20px;z-index:10000; font:bold 24px arial;color:#0F9FC4;"></div>
+  </div>
+  <script src="dist/src.js"></script>
 </body>
 </html>

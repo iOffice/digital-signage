@@ -1,0 +1,18 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "_": false,
+    "angular": false,
+    "L": false,
+    "FVC": false,
+    "ngFV": false,
+    "FV": false,
+    "module": false,
+    "define": false,
+    "require": false
+  }
+}
