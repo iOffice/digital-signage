@@ -91,7 +91,7 @@ _.assign(window, {
   },
   selectRoom: function selectRoom(id) {
     if (gMap) {
-      gMap.selectRoom.byId(id);
+      gMap.selectRoom.byId(id, { zoom: 'to' });
       gMap.pingRoom(gMap.roomById[id], {
         screenRatio: 0.1,
         pulses: 4
