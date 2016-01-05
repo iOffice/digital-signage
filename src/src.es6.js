@@ -65,10 +65,10 @@ _.assign(window, {
         }
         if (room.options.interactive) {
           gMap.selectRoom.byId(room.id);
-          gMap.pingRoom(room, {
-            screenRatio: 0.1,
-            pulses: 4,
-          });
+          // gMap.pingRoom(room, {
+          //   screenRatio: 0.1,
+          //   pulses: 4,
+          // });
         }
       }
     },
