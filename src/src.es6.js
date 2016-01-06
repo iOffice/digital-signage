@@ -99,10 +99,13 @@ _.assign(window, {
 });
 
 
-function addMarker(map, room, icon, popupLabel, delta = [0, 0]) {
+function addMarker(map, room, icon, popupLabel, delta = [0, 0], isDelta = true) {
   const b = room.getLargestRectangleBounds();
   const marker = L.marker(
-    [b.getNorth() + delta[1], b.getCenter().lng + delta[0]],
+    [
+      (isDelta ? b.getNorth() + delta[1] : delta[1]),
+      (isDelta ? b.getCenter().lng + delta[0] : delta[0]),
+    ],
     {icon: icon}
   );
   if (popupLabel) {
@@ -127,12 +130,12 @@ angular.module('DemoApp', ['i.floor-viewer'])
         document.getElementById('title').innerHTML = map.floor.building.name + ' / ' + map.floor.name;
         M2.position.zoom = map.getZoom();
         M2.position.center = map.getCenter();
-
-        if (map.floor.id !== 224) {
-          return;
-        }
+        map.on('click', (e) => {
+          console.log('LATLNG: ', [e.latlng.lng, e.latlng.lat]);
+        });
 
         map.onRoomsReady.then(() => {
+
           L.AwesomeMarkers.Icon.prototype.options.prefix = 'ion';
           const menRestRoomIcon = L.AwesomeMarkers.icon({
             icon: 'man',
@@ -154,22 +157,26 @@ angular.module('DemoApp', ['i.floor-viewer'])
             icon: 'erlenmeyer-flask',
             markerColor: 'purple',
           });
+          const labtopIcon = L.AwesomeMarkers.icon({
+            icon: 'laptop',
+            markerColor: 'purple',
+          });
           const exitIcon = L.AwesomeMarkers.icon({
             icon: 'android-exit',
             markerColor: 'red',
           });
-          // 22miles
-          try {
-            const foodLayer = addMarker(map, map.roomByName['1834'], foodIcon, 'Cafeteria', [0, -0.3]);
-            const hereLayer = addMarker(map, map.roomByName['1819'], hereIcon, 'You Are Here', [0.2, -0.85]);
+
+          if (map.floor.id === 330) {
+            const foodLayer = addMarker(map, map.roomByName.BISTRO, foodIcon, 'Cafeteria', [3.22265625, -1.84375], false);
+            const hereLayer = addMarker(map, map.roomByName['GET AWAY 2'], hereIcon, 'You Are Here', [11.20703125, -3.5390625], false);
             const restroomsLayers = new L.LayerGroup([
-              addMarker(map, map.roomByName['1832'], womenRestRoomIcon, 'Women'),
-              addMarker(map, map.roomByName['1833'], menRestRoomIcon, 'Men'),
+              addMarker(map, map.roomByName['WOMEN\'S RESTROOM'], womenRestRoomIcon, 'Women', [6.9609375, -3.3671875], false),
+              addMarker(map, map.roomByName['MEN\'S RESTROOM'], menRestRoomIcon, 'Men', [6.96484375, -3.91015625], false),
             ]).addTo(map);
-            const labLayer = addMarker(map, map.roomByName['1822'], labIcon, 'Laboratory', [0, -0.1]);
+            const laptopLayer = addMarker(map, map.roomByName['LAPTOP BAR'], labtopIcon, 'Laptop Bar', [7.203125, -5.79296875], false);
             const exitLayer = new L.LayerGroup([
-              addMarker(map, map.roomByName['1826'], exitIcon, 'Emergency Exit', [0.1, -1.725]),
-              addMarker(map, map.roomByName['1803'], exitIcon, 'Emergency Exit', [-0.025, 1.3]),
+              addMarker(map, map.roomByName['NORTH STAIRS'], exitIcon, 'Emergency Exit', [12.10546875, -3.9609375], false),
+              addMarker(map, map.roomByName['SOUTH STAIRS'], exitIcon, 'Emergency Exit', [5.33203125, -1.26171875], false),
             ]).addTo(map);
 
             const baseLayers = {};
@@ -177,22 +184,27 @@ angular.module('DemoApp', ['i.floor-viewer'])
               '<i class="icon ion-home"></i> You Are Here': hereLayer,
               '<i class="icon ion-woman"></i><i class="icon ion-man"></i> Restrooms': restroomsLayers,
               '<i class="icon ion-pizza"></i> Cafeteria': foodLayer,
-              '<i class="icon ion-erlenmeyer-flask"></i> Laboratory': labLayer,
+              '<i class="icon ion-laptop"></i> Laptop Bar': laptopLayer,
               '<i class="icon ion-android-exit"></i> Emergency Exit': exitLayer,
             };
             const panelLayers = L.control.layers(baseLayers, overLayers);
             map.addControl(panelLayers);
-          } catch (er) {
-            console.log('Error adding layers...');
+          } else if (map.floor.id === 331) {
+            return;
+          } else if (map.floor.id === 333) {
+            return;
+          } else {
+            return;
           }
+
           const legend = L.control({position: 'bottomright'});
           legend.onAdd = () => {
             const div = L.DomUtil.create('div', 'info legend');
             const data = {
               'Non-Reservable': 'lightgray',
               'Reservable': '#80C680',
-              'Partially Available': '#FFB74D',
-              'At Capacity': '#D32F2F',
+              // 'Partially Available': '#FFB74D',
+              // 'At Capacity': '#D32F2F',
             };
             _.each(data, (color, label) => {
               div.innerHTML +=
