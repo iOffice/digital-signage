@@ -247,8 +247,8 @@ angular.module('DemoApp', ['i.floor-viewer'])
             const data = {
               'Non-Reservable': 'lightgray',
               'Reservable': '#80C680',
-              'Partially Available': '#FFB74D',
-              'At Capacity': '#D32F2F',
+              // 'Partially Booked': '#FFB74D',
+              'Booked': '#D32F2F',
             };
             _.each(data, (color, label) => {
               div.innerHTML +=

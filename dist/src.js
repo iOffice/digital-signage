@@ -225,8 +225,8 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
           var data = {
             'Non-Reservable': 'lightgray',
             'Reservable': '#80C680',
-            'Partially Available': '#FFB74D',
-            'At Capacity': '#D32F2F'
+            // 'Partially Booked': '#FFB74D',
+            'Booked': '#D32F2F'
           };
           _.each(data, function (color, label) {
             div.innerHTML += '<i style="background:' + color + '"></i> ' + label + '<br>';
