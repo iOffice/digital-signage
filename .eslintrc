@@ -6,6 +6,7 @@
   },
   "globals": {
     "m2SetRTVar": false,
+    "gReservations": false,
     "gMap": true,
     "M2": true,
     "_": false,

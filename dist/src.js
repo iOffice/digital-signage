@@ -24,6 +24,7 @@ setFloorInfo(query);
 
 // GLOBALS
 _.assign(window, {
+  gReservations: null,
   gMap: null,
   M2: {
     position: {},
@@ -39,6 +40,9 @@ _.assign(window, {
       }
     },
     reset: function reset() {
+      if (gReservations) {
+        gReservations.updateData();
+      }
       if (gMap) {
         gMap.panTo(M2.position.center, { animate: false });
         gMap.setZoom(M2.position.zoom);
@@ -119,6 +123,7 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
     'x-auth-password': query.pass
   });
   setTimeout(function () {
+    gReservations = fvDelegate.getLayerControllerByHandle('reservations');
     fvDelegate.getMap().then(function (map) {
       gMap = map;
       map.zoomControl.setPosition('topright');
@@ -181,9 +186,35 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
           var panelLayers = L.control.layers(baseLayers, overLayers);
           map.addControl(panelLayers);
         } else if (map.floor.id === 331) {
-          return;
-        } else if (map.floor.id === 333) {
-          return;
+          var hereLayer = addMarker(map, map.roomByName['LOBBY'], hereIcon, 'You Are Here', [9.21875, -2.65625], false);
+          var restroomsLayers = new L.LayerGroup([addMarker(map, map.roomByName['WOMEN\'S RESTROOM'], womenRestRoomIcon, 'Women', [5.5625, -2.38671875], false), addMarker(map, map.roomByName['MEN\'S RESTROOM'], menRestRoomIcon, 'Men', [5.55859375, -2.8671875], false)]).addTo(map);
+          var laptopLayer = addMarker(map, map.roomByName['LAPTOP BAR'], labtopIcon, 'Laptop Bar', [10.421875, -4.89453125], false);
+          var exitLayer = new L.LayerGroup([addMarker(map, map.roomByName['NORTH STAIRS'], exitIcon, 'Emergency Exit', [9.98828125, -3.09765625], false), addMarker(map, map.roomByName['SOUTH STAIRS'], exitIcon, 'Emergency Exit', [3.453125, -2.18359375], false), addMarker(map, map.roomByName['LOBBY STAIRS'], exitIcon, 'Emergency Exit', [7.625, -2.4921875], false)]).addTo(map);
+
+          var baseLayers = {};
+          var overLayers = {
+            '<i class="icon ion-home"></i> You Are Here': hereLayer,
+            '<i class="icon ion-woman"></i><i class="icon ion-man"></i> Restrooms': restroomsLayers,
+            '<i class="icon ion-laptop"></i> Laptop Bar': laptopLayer,
+            '<i class="icon ion-android-exit"></i> Emergency Exit': exitLayer
+          };
+          var panelLayers = L.control.layers(baseLayers, overLayers);
+          map.addControl(panelLayers);
+        } else if (map.floor.id === 332) {
+          var hereLayer = addMarker(map, map.roomByName['ELEV.1'], hereIcon, 'You Are Here', [9.0390625, -2.6640625], false);
+          var restroomsLayers = new L.LayerGroup([addMarker(map, map.roomByName['WOMEN\'S RESTROOM'], womenRestRoomIcon, 'Women', [5.578125, -2.40625], false), addMarker(map, map.roomByName['MEN\'S RESTROOM'], menRestRoomIcon, 'Men', [5.58984375, -2.90625], false)]).addTo(map);
+          var laptopLayer = addMarker(map, map.roomByName['LAPTOP BAR'], labtopIcon, 'Laptop Bar', [3.8125, -4.9453125], false);
+          var exitLayer = new L.LayerGroup([addMarker(map, map.roomByName['NORTH STAIRS'], exitIcon, 'Emergency Exit', [10.015625, -3.12109375], false), addMarker(map, map.roomByName['SOUTH STAIRS'], exitIcon, 'Emergency Exit', [3.33984375, -2.140625], false)]).addTo(map);
+
+          var baseLayers = {};
+          var overLayers = {
+            '<i class="icon ion-home"></i> You Are Here': hereLayer,
+            '<i class="icon ion-woman"></i><i class="icon ion-man"></i> Restrooms': restroomsLayers,
+            '<i class="icon ion-laptop"></i> Laptop Bar': laptopLayer,
+            '<i class="icon ion-android-exit"></i> Emergency Exit': exitLayer
+          };
+          var panelLayers = L.control.layers(baseLayers, overLayers);
+          map.addControl(panelLayers);
         } else {
           return;
         }
@@ -193,10 +224,10 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
           var div = L.DomUtil.create('div', 'info legend');
           var data = {
             'Non-Reservable': 'lightgray',
-            'Reservable': '#80C680'
+            'Reservable': '#80C680',
+            'Partially Available': '#FFB74D',
+            'At Capacity': '#D32F2F'
           };
-          // 'Partially Available': '#FFB74D',
-          // 'At Capacity': '#D32F2F',
           _.each(data, function (color, label) {
             div.innerHTML += '<i style="background:' + color + '"></i> ' + label + '<br>';
           });
