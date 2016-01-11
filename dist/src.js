@@ -106,7 +106,8 @@ _.assign(window, {
   }
 });
 
-Utils.trace("hello", null, null);
+console.log("Hello?");
+//Utils.trace("hello", null, null);
 
 function addMarker(map, room, icon, popupLabel) {
   var delta = arguments.length <= 4 || arguments[4] === undefined ? [0, 0] : arguments[4];
