@@ -105,7 +105,7 @@ _.assign(window, {
 });
 
 
-Utils.trace('hello from js');
+Utils.trace("hello", null, null);
 
 function addMarker(map, room, icon, popupLabel, delta = [0, 0], isDelta = true) {
   const b = room.getLargestRectangleBounds();
