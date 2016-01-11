@@ -136,9 +136,9 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
       map.on('roomclick', M2.onRoomClick);
       document.getElementById('title').innerHTML = map.floor.building.name + ' / ' + map.floor.name;
       if (map.floor.id === 330) {
-        M2.position.zoom = map.getZoom() + 1;
+        M2.position.zoom = 5;
       } else {
-        M2.position.zoom = map.getZoom() + 2;
+        M2.position.zoom = 6;
       }
       M2.position.center = map.getCenter();
       map.on('click', function (e) {
