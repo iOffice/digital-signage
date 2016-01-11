@@ -135,7 +135,11 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
       // map.setZoom(map.getZoom() + 1);
       map.on('roomclick', M2.onRoomClick);
       document.getElementById('title').innerHTML = map.floor.building.name + ' / ' + map.floor.name;
-      M2.position.zoom = map.getZoom();
+      if (map.floor.id === 330) {
+        M2.position.zoom = map.getZoom() + 1;
+      } else {
+        M2.position.zoom = map.getZoom() + 2;
+      }
       M2.position.center = map.getCenter();
       map.on('click', function (e) {
         console.log('LATLNG: ', [e.latlng.lng, e.latlng.lat]);
