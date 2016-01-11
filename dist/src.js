@@ -1,5 +1,7 @@
 'use strict';
 
+/* globals Utils */
+
 function getQueryParams() {
   var url = arguments.length <= 0 || arguments[0] === undefined ? window.location.href : arguments[0];
 
@@ -103,6 +105,8 @@ _.assign(window, {
     }
   }
 });
+
+Utils.trace('hello from js');
 
 function addMarker(map, room, icon, popupLabel) {
   var delta = arguments.length <= 4 || arguments[4] === undefined ? [0, 0] : arguments[4];

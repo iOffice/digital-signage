@@ -1,3 +1,5 @@
+/* globals Utils */
+
 function getQueryParams(url = window.location.href) {
   const query = {};
   const params = url.substr(url.lastIndexOf('?') + 1).split('&');
@@ -102,6 +104,8 @@ _.assign(window, {
   },
 });
 
+
+Utils.trace('hello from js');
 
 function addMarker(map, room, icon, popupLabel, delta = [0, 0], isDelta = true) {
   const b = room.getLargestRectangleBounds();
