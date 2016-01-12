@@ -183,11 +183,11 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
 
           var baseLayers = {};
           var overLayers = {
-            '<i class="icon ion-home">A</i> You Are Here': hereLayer,
-            '<i class="icon ion-woman">B</i><i class="icon ion-man"></i> Restrooms': restroomsLayers,
-            '<i class="icon ion-pizza">C</i> Cafeteria': foodLayer,
-            '<i class="icon ion-laptop">D</i> Laptop Bar': laptopLayer,
-            '<i class="icon ion-android-exit">E</i> Emergency Exit': exitLayer
+            '<i class="icon ion-home"></i> You Are Here': hereLayer,
+            '<i class="icon ion-woman"></i><i class="icon ion-man"></i> Restrooms': restroomsLayers,
+            '<i class="icon ion-pizza"></i> Cafeteria': foodLayer,
+            '<i class="icon ion-laptop"></i> Laptop Bar': laptopLayer,
+            '<i class="icon ion-android-exit"></i> Emergency Exit': exitLayer
           };
           var panelLayers = L.control.layers(baseLayers, overLayers);
           map.addControl(panelLayers);
