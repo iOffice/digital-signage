@@ -131,15 +131,12 @@ angular.module('DemoApp', ['i.floor-viewer']).controller('DemoController', funct
     gReservations = fvDelegate.getLayerControllerByHandle('reservations');
     fvDelegate.getMap().then(function (map) {
       gMap = map;
+      gMap.setZoom(6);
       map.zoomControl.setPosition('topright');
       // map.setZoom(map.getZoom() + 1);
       map.on('roomclick', M2.onRoomClick);
       document.getElementById('title').innerHTML = map.floor.building.name + ' / ' + map.floor.name;
-      if (map.floor.id === 330) {
-        M2.position.zoom = 5;
-      } else {
-        M2.position.zoom = 6;
-      }
+      M2.position.zoom = 6;
       M2.position.center = map.getCenter();
       map.on('click', function (e) {
         console.log('LATLNG: ', [e.latlng.lng, e.latlng.lat]);
